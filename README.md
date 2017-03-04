@@ -8,8 +8,9 @@ The accession number for ribosome profiling and RNA-seq data used in this study 
 for human genes from Ensembl using BioMart. The tRNA adapative index for each gene was calculated using CodonR
 (https://github.com/dbgoodman/ecre_cds_analysis/tree/master/codonR). 
 
-For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb 5. Analysis of ribosome profiling and RNA-seq data was performed in R 3.2.4 
-using packages ggplot2 and extrafont.
+For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb 5. Analysis of ribosome profiling and RNA-seq data was performed in R 3.2.4 using packages ggplot2 and extrafont.
+
+#TODO include all other data sources
 
 ###Repository data
 
