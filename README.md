@@ -10,11 +10,7 @@ for human genes from Ensembl using BioMart. The tRNA adaptive index for each gen
 
 For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb. Analysis of ribosome profiling and RNA-seq data was performed in R 3.2.4 using packages ggplot2 and extrafont. Folding energies of RNAs were calculated with RNAfold, the part of Vienna package.
 
-
 #TODO include all other data sources
-
-
-
 
 ###Repository data
 
