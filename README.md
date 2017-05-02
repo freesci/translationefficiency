@@ -8,9 +8,7 @@ The accession number for ribosome profiling and RNA-seq data used in this study 
 for human genes from Ensembl using BioMart. The tRNA adaptive index for each gene was calculated using CodonR
 (https://github.com/dbgoodman/ecre_cds_analysis/tree/master/codonR). 
 
-For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb. Analysis of ribosome profiling and RNA-seq data was performed in R 3.2.4 using packages ggplot2 and extrafont. Folding energies of RNAs were calculated with RNAfold, the part of Vienna package.
-
-#TODO include all other data sources
+For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb. Analysis of ribosome profiling and RNA-seq data was performed in R 3.2.4 using packages listed below. Folding energies of RNAs were calculated with RNAfold, the part of Vienna package. 
 
 ###Repository data
 
@@ -21,6 +19,7 @@ This repository contains all the data required to run the analyses, plus the mai
  - Biostrings (Bioconductor)
  - biomaRt (Bioconductor)
  - seqinr (Bioconductor)
- - plyr 
+ - plyr
+ - devtools
  
- Running the script will produce the results of statistical tests plus the number of graphs used in the manuscript.
+ Running the script will produce the results of statistical tests plus the number of graphs used in the manuscript. 
