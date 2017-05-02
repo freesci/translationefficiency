@@ -918,4 +918,67 @@ foldmrnaTE<-lm(fold ~ predictedFC_mrnaTE, miR_155_TE_UTR_all)
 
 summary(foldmrnaTE)
 
+### targeted genes vs controls
+
+x=median(miR_155_changes_control$TE_ko_2hR)
+miR_155_changes_control$TE_ko_2hR.high.low<-ifelse(miR_155_changes_control$TE_ko_2hR<x, "Low", "High")
+x=median(miR_155_changes_control$TE_ko_4hR)
+miR_155_changes_control$TE_ko_4hR.high.low<-ifelse(miR_155_changes_control$TE_ko_4hR<x, "Low", "High")
+x=median(miR_155_changes_control$TE_ko_8hR)
+miR_155_changes_control$TE_ko_8hR.high.low<-ifelse(miR_155_changes_control$TE_ko_8hR<x, "Low", "High")
+x=median(miR_155_changes_control$TE_ko_48hR)
+miR_155_changes_control$TE_ko_48hR.high.low<-ifelse(miR_155_changes_control$TE_ko_48hR<x, "Low", "High")
+
+ggplot(miR_155_changes_targets, aes(x=TE_ko_2hR*RPF.2.h, group=TE_2hr_.high.low, color=TE_2hr_.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Targets at 2hrs")
+ggsave("S14_targets_2hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_targets, aes(x=TE_ko_4hR*RPF.4.h, group=TE_4hr_.high.low, color=TE_4hr_.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4))  + labs(title="Targets at 4hrs")
+ggsave("S14_targets_4hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_targets, aes(x=TE_ko_8hR*RPF.8.h, group=TE_8hr_.high.low, color=TE_8hr_.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Targets at 8hrs")
+ggsave("S14_targets_8hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_targets, aes(x=TE_ko_48hR*RPF.48.h, group=TE_48hr_.high.low, color=TE_48hr_.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Targets at 48hrs")
+ggsave("S14_targets_48hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_control, aes(x=TE_ko_2hR*RPF.2.h, group=TE_ko_2hR.high.low, color=TE_ko_2hR.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Control at 2hrs")
+ggsave("S14_control_2hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_control, aes(x=TE_ko_4hR*RPF.4.h, group=TE_ko_4hR.high.low, color=TE_ko_4hR.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Control at 4hrs")
+ggsave("S14_control_4hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_control, aes(x=TE_ko_8hR*RPF.8.h, group=TE_ko_8hR.high.low, color=TE_ko_8hR.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Control at 8hrs")
+ggsave("S14_control_8hrs.tiff",  width = 5, height = 5)
+
+ggplot(miR_155_changes_control, aes(x=TE_ko_48hR*RPF.48.h, group=TE_ko_48hR.high.low, color=TE_ko_48hR.high.low)) + 
+  geom_density(alpha=.3) + theme_science() + 
+  scale_x_continuous(limits = c(-4,4)) + labs(title="Control at 48hrs")
+ggsave("S14_control_48hrs.tiff",  width = 5, height = 5)
+
+target<-miR_155_changes_targets$TE_ko_2hR*miR_155_changes_targets$RPF.2.h
+control<-miR_155_changes_control$TE_ko_2hR*miR_155_changes_control$RPF.2.h
+ks.test(target, control, alternative = "greater")
+target<-miR_155_changes_targets$TE_ko_4hR*miR_155_changes_targets$RPF.4.h
+control<-miR_155_changes_control$TE_ko_4hR*miR_155_changes_control$RPF.4.h
+ks.test(target, control, alternative = "greater")
+target<-miR_155_changes_targets$TE_ko_8hR*miR_155_changes_targets$RPF.8.h
+control<-miR_155_changes_control$TE_ko_8hR*miR_155_changes_control$RPF.8.h
+ks.test(target, control, alternative = "greater")
+target<-miR_155_changes_targets$TE_ko_48hR*miR_155_changes_targets$RPF.48.h
+control<-miR_155_changes_control$TE_ko_48hR*miR_155_changes_control$RPF.48.h
+ks.test(target, control, alternative = "greater")
 
