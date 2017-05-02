@@ -982,3 +982,88 @@ target<-miR_155_changes_targets$TE_ko_48hR*miR_155_changes_targets$RPF.48.h
 control<-miR_155_changes_control$TE_ko_48hR*miR_155_changes_control$RPF.48.h
 ks.test(target, control, alternative = "greater")
 
+### tAI analysis - testing some weakly documented features
+
+
+install.packages("devtools")
+library(ggplot2)
+
+#this is the newest version of Mario dos Reis package: https://github.com/mariodosreis/tai 
+devtools::install_github("mariodosreis/tai")
+require(tAI)
+
+#trna raw files contain the numbers for respective tRNAs and zeros for stop codons (last three lines)
+
+
+#this is the order from codon file; 
+#column  codon
+#-------------
+#1	TTT
+#2	TTC
+#3	TTA
+#4	TTG
+#...
+#first case, TTT codon corresponds to TTT tRNA (wrong)
+dros.trna<-scan("../code/codon_analysis/drosophila.trna.raw.trna")
+
+
+#this is the correct order, where tRNAs are complemented: TTT codon corresponds to AAA tRNA, TTC codon corresponds to GAA tRNA, etc.
+dros.compl<-scan("../code/codon_analysis/drosophila.trna.raw.complement")
+
+#let's calculate both ways
+
+dros.ws.trna<-get.ws(tRNA = dros.trna, sking=0) #sking set to zero, indicating eukaryota
+dros.ws.compl<-get.ws(tRNA = dros.compl, sking=0) #sking set to zero, indicating eukaryota
+
+#all CDS from Ensembl
+dros.m<-matrix(scan("../code/codon_analysis/drosophila2.m"), ncol=61, byrow = TRUE) 
+dros.m<-dros.m[,-33] 
+dros.tai <- get.tai(dros.m, dros.ws.trna)
+dros.tai.compl <- get.tai(dros.m, dros.ws.compl)
+
+hist(dros.tai, breaks=50)
+hist(dros.tai.compl, breaks=50)
+theme_science <- function (base_size = 12, base_family = "Arial Black") 
+{
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+    theme(panel.border = element_blank(), axis.line = element_line(colour = "black", size=2), 
+          panel.grid.major = element_line(), panel.grid.major.x = element_blank(),
+          axis.line.x = element_line(colour= "black", size=1),  axis.line.y = element_line(colour= "black", size=1),
+          panel.grid.major.y = element_blank(), panel.grid.minor = element_line(), 
+          panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank(), 
+          strip.background = element_rect(colour = "black", 
+                                          size = 0.5), legend.key = element_blank())
+}
+
+dme_tAI <- as.data.frame(dros.tai.compl)
+
+bp <- ggplot(dme_tAI, aes(x=dros.tai.compl, fill= ..x..)) + 
+  geom_histogram(aes(y=..count../sum(..count..))) + 
+  scale_fill_gradient(low = "light grey", high = "black") +
+  scale_y_continuous(limits = c(0, .25), expand = c(0, 0)) +
+  xlab("tAI") +
+  ylab("Frequency") +
+  geom_vline(xintercept=c(0.298, 0.387, 0.494, 0.602), size=1) +
+  theme_science()
+bp + coord_flip() + 
+  scale_x_reverse() + 
+  theme(axis.title.y = element_text(angle = 0)) + 
+  guides(fill=FALSE)
+ggsave("dme_tAI_hist.tiff", height=3.1, width=3.6, units = "in")
+
+human.trna <- scan("../code/codon_analysis/human.trna_raw.complement")
+human.ws<-get.ws(tRNA = human.trna, sking=0) #sking set to zero, indicating eukaryota
+human.m <- matrix(scan("../code/codon_analysis/human.m"), ncol=61, byrow = TRUE)
+human.m <- human.m[,-33]
+human.tai <- get.tai(human.m, human.ws)
+summary(human.tai)
+id.list <- scan("../code/codon_analysis/id.list",what = "character")
+human.tai.values<-data.frame(id.list, human.tai)
+colnames(human.tai.values)<- c("V1", "V2")
+write.csv(human.tai.values, file="human_tai_values_new.csv")
+
+ren.m<-matrix(scan("/Users/Kyle/Desktop/codonR/ren.m"), ncol=61, byrow = TRUE) 
+ren.m<-ren.m[,-33] 
+ren.tai.compl <- get.tai(ren.m, dros.ws.compl)
+
+
