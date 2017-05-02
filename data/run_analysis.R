@@ -256,10 +256,10 @@ ks.test(miR_155_targets_UTR$fold[miR_155_targets_UTR$Length_T_q=="Med.Short"], m
 ks.test(miR_155_targets_UTR$fold[miR_155_targets_UTR$Length_T_q=="Short"], miR_155_targets_UTR$fold)
 
 #read table containing tAI values and merge with miR_155_targets
-human_tAI <- read.table("/human_tAI_trim.txt")
+human_tAI <- read.table("human_tAI_trim.txt")
 miR_155_targets_tAI <- merge(miR_155_targets, human_tAI, by.x="RefSeq_Accession.x", by.y="V1")
 
-#deine the median of tAI and make a new column for tAI above and below median
+#define the median of tAI and make a new column for tAI above and below median
 t = median(miR_155_targets_tAI$V2)
 miR_155_targets_tAI$tAI_median <- ifelse(miR_155_targets_tAI$V2 <t, "Low", "High")
 #KS test for fold change difference between high and low tAI messages
@@ -311,9 +311,9 @@ ks.test(miR_155_targets_tAI$fold[miR_155_targets_tAI$tAI=="Low"], miR_155_target
 #BELOW IS THE ANALYSIS FOR RNA FC FOR miR-155 TARGETS
 
 #read file for miR-155 transfection RNAseq data
-miR_155_RNA <- read.delim("/miR155_32hr_mRNA.txt", stringsAsFactors=FALSE)
+miR_155_RNA <- read.delim("miR155_32hr_mRNA.txt", stringsAsFactors=FALSE)
 #read file for mock transfection RNAseq data
-mock_mRNA <- read.delim("/mRNA_mock_32hr.txt", stringsAsFactors=FALSE)
+mock_mRNA <- read.delim("mRNA_mock_32hr.txt", stringsAsFactors=FALSE)
 #merge miR-155 and mock fp data
 miR_155_mock_RNA <- merge(miR_155_RNA, mock_mRNA, by.x="Gene_Name", by.y="Gene_Name")
 #make new column for log2 fold change in fp
@@ -323,7 +323,7 @@ miR_155_mock_RNA <- na.omit(miR_155_mock_RNA)
 miR_155_mock_RNA <- subset(miR_155_mock_RNA, fold >-Inf)
 miR_155_mock_RNA <- subset(miR_155_mock_RNA, fold <Inf)
 #read file for mock transfection footprint data
-mock_fp <- read.delim("/mock_32hr_fp.txt", stringsAsFactors=FALSE)
+mock_fp <- read.delim("mock_32hr_fp.txt", stringsAsFactors=FALSE)
 #merge miR-155/mock fp data with mock RNAseq data
 miR_155_mock_RNA_TE <- merge(miR_155_mock_RNA, mock_fp, by.x="Gene_Name", by.y="Gene_Name")
 #calculate TE (fpsubmock/RNAseqsubmock) and make a new column, TE
@@ -331,7 +331,7 @@ miR_155_mock_RNA_TE$TE <- miR_155_mock_RNA_TE$Expression_Level_.rpkM./miR_155_mo
 #remove Inf from TE
 miR_155_mock_RNA_TE <- subset(miR_155_mock_RNA_TE, TE <Inf)
 #read file for miR-155 target identities from Targetscan
-miR_155_TS <- read.delim("/mir-155_TS.txt")
+miR_155_TS <- read.delim("mir-155_TS.txt")
 #merge miR-155/mock/TE data with miR-155 target identities
 miR_155_RNA_targets <- merge(miR_155_mock_RNA_TE, miR_155_TS, by.x="Gene_Name", by.y="Ortholog.of.target.gene")
 miR_155_RNA_targets <- subset(miR_155_RNA_targets, TE >0)
@@ -444,9 +444,9 @@ cor.test(translation_RNA_miR_155$fold.x, translation_RNA_miR_155$fold.y, method=
 #BELOW IS THE ANALYSIS OF miR-1 RPF FC
 
 #read file for miR-1 transfection footprint data
-miR_1_fp <- read.delim("/mir1_32hr_fp.txt", stringsAsFactors=FALSE)
+miR_1_fp <- read.delim("mir1_32hr_fp.txt", stringsAsFactors=FALSE)
 #read file for mock transfection footprint data
-mock_fp <- read.delim("/mock_32hr_fp.txt", stringsAsFactors=FALSE)
+mock_fp <- read.delim("mock_32hr_fp.txt", stringsAsFactors=FALSE)
 #merge miR-1 and mock fp data
 miR_1_mock <- merge(miR_1_fp, mock_fp, by.x="Gene_Name", by.y="Gene_Name")
 #make new column for log2 fold change in fp
@@ -456,7 +456,7 @@ miR_1_mock <- na.omit(miR_1_mock)
 miR_1_mock <- subset(miR_1_mock, fold >-Inf)
 miR_1_mock <- subset(miR_1_mock, fold <Inf)
 #read file for mock transfection RNAseq data
-mock_mRNA <- read.delim("/mRNA_mock_32hr.txt", stringsAsFactors=FALSE)
+mock_mRNA <- read.delim("mRNA_mock_32hr.txt", stringsAsFactors=FALSE)
 #merge miR-1/mock fp data with mock RNAseq data
 miR_1_TE <- merge(miR_1_mock, mock_mRNA, by.x="Gene_Name", by.y="Gene_Name")
 #calculate TE (fpsubmock/RNAseqsubmock) and make a new column, TE
@@ -464,7 +464,7 @@ miR_1_TE$TE <- miR_1_TE$Expression_Level_.rpkM..y/miR_1_TE$Expression_Level_.rpk
 #remove Inf from TE
 miR_1_TE <- subset(miR_1_TE, TE <Inf)
 #read file for miR-1 target identities from Targetscan
-miR_1_TS <- read.delim("/mir-1_TS.txt")
+miR_1_TS <- read.delim("mir-1_TS.txt")
 miR_1_TS <- subset(miR_1_TS, Representative.miRNA == "hsa-miR-1-3p")
 #merge miR-1/mock/TE data with miR-1 target identities
 miR_1_targets <- merge(miR_1_TE, miR_1_TS, by.x="Gene_Name", by.y="Ortholog.of.target.gene")
