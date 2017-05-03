@@ -2,13 +2,13 @@
 
 ####  by Cottrell, Szczesny and Djuranovic, submitted
 
-### Introduction 
+### Introduction
 
-The accession number for ribosome profiling and RNA-seq data used in this study is GSE22004. Translation efficiency (TE) was calculated using RPF and RNA-seq rpkM from mock transfection, TE = (rpkM RPF/rpkM RNA ). We obtained transcript, CDS and 3’UTR length
-for human genes from Ensembl using BioMart. The tRNA adaptive index for each gene was calculated using CodonR
-(https://github.com/dbgoodman/ecre_cds_analysis/tree/master/codonR). 
+This is repository accompanying the manuscript entitled "Translation efficiency is a determinant of the magnitude of miRNA-mediated repression" by Kyle A Cottrell, Pawel Szczesny, Sergej Djuranovic.
 
-For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb. Analysis of ribosome profiling and RNA-seq data was performed in R 3.2.4 using packages listed below. Folding energies of RNAs were calculated with RNAfold, the part of Vienna package. 
+### Manuscript methods 
+
+The accession number for ribosome profiling and RNA-seq data used in this study is GSE22004. Fold change of RPF and RNA-seq was calculated as described in Guo et al., 2010. Translation efficiency (TE) was calculated using RPF and RNA-seq rpkM from mock transfection, TE = (rpkMRPF/rpkMRNA). We obtained transcript, CDS and 3’UTR length for human genes from Ensembl using BioMart. mRNA half-lives were obtained from Tani et al., 2012. miR-155 or miR-1 targets were predicted using TargetScan. The tRNA adapative index for each gene was calculated using CodonR (https://github.com/dbgoodman/ecre_cds_analysis/tree/master/codonR). For this analysis the CDS of all human or Drosophila genes was obtained from the UCSC Table Browser and the tRNA gene table for human or Drosophila was obtained from the GtRNAdb. 
 
 ### Repository data
 
@@ -22,4 +22,4 @@ This repository contains all the data required to run the analyses, plus the mai
  - plyr
  - devtools
  
- Running the script will produce the results of statistical tests plus the number of graphs used in the manuscript. 
+ Running the script will produce the results of statistical tests plus the number of graphs used in the manuscript. While the plots are made using Windows-only font, the latter parts are explicitly using paths and tools available under linux operating system (such as Vienna package). 
