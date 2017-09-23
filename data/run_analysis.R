@@ -3,8 +3,14 @@ library(extrafont)
 library(seqinr)
 library(Biostrings)
 library(biomaRt)
+library(plyr)
+library(seqinr)
 
+install.packages("devtools")
 
+#this is the newest version of Mario dos Reis package: https://github.com/mariodosreis/tai 
+devtools::install_github("mariodosreis/tai")
+require(tAI)
 
 
 
@@ -739,13 +745,13 @@ miR_155_TE_UTR<-merge(tmp, utr5p, by.x="RefSeq_Accession.x", by.y="refseq_mrna")
 
 
 #dump when sequence is unavailable
-library(plyr)
+
 miR_155_TE_UTR <- plyr::rename(miR_155_TE_UTR, c("3utr"="utr3p", "5utr"="utr5p"))
 miR_155_TE_UTR <- subset(miR_155_TE_UTR, utr5p != "Sequence unavailable")
 miR_155_TE_UTR <- subset(miR_155_TE_UTR, utr3p != "Sequence unavailable")
 
 #calculate GC
-library(seqinr)
+
 miR_155_TE_UTR$GC_utr3p<-0
 miR_155_TE_UTR$GC_utr5p<-0
 
@@ -985,12 +991,6 @@ ks.test(target, control, alternative = "greater")
 ### tAI analysis - testing some weakly documented features
 
 
-install.packages("devtools")
-library(ggplot2)
-
-#this is the newest version of Mario dos Reis package: https://github.com/mariodosreis/tai 
-devtools::install_github("mariodosreis/tai")
-require(tAI)
 
 #trna raw files contain the numbers for respective tRNAs and zeros for stop codons (last three lines)
 
